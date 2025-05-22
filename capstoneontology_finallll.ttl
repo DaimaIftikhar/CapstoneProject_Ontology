@@ -1,931 +1,1228 @@
 @prefix : <http://example.org/capstone#> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <http://schema.org/> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-:budget a owl:DatatypeProperty ;
-    rdfs:label "budget" ;
-    rdfs:comment "The budget for the project." ;
-    rdfs:domain :CapstoneProject ;
-    rdfs:range xsd:decimal .
-
-:challengeID a owl:DatatypeProperty ;
-    rdfs:label "challenge ID" ;
-    rdfs:comment "Identifier of the challenge." ;
-    rdfs:domain :Challenge ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf dcterms:identifier .
-
-:confidentiality a owl:DatatypeProperty ;
-    rdfs:label "confidentiality" ;
-    rdfs:comment "Access level or privacy label of the document." ;
-    rdfs:domain :Documentation ;
-    rdfs:range xsd:string .
-
-:contactNumber a owl:DatatypeProperty ;
-    rdfs:label "contact number" ;
-    rdfs:comment "Contact telephone number of the stakeholder." ;
-    rdfs:domain :Stakeholder ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf schema:telephone .
-
-:creationDate a owl:DatatypeProperty ;
-    rdfs:label "creation date" ;
-    rdfs:comment "The creation date of the document." ;
-    rdfs:domain :Documentation ;
-    rdfs:range xsd:date ;
-    rdfs:subPropertyOf dcterms:created .
-
-:criterionName a owl:DatatypeProperty ;
-    rdfs:label "criterion name" ;
-    rdfs:comment "Name of the evaluation criterion." ;
-    rdfs:domain :EvaluationCriterion ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf dcterms:title .
-
-:dbType a owl:DatatypeProperty ;
-    rdfs:label "database type" ;
-    rdfs:comment "Type of the database (e.g. SQL/NoSQL)." ;
-    rdfs:domain :Database ;
-    rdfs:range xsd:string .
-
-:deliverableName a owl:DatatypeProperty ;
-    rdfs:label "deliverable name" ;
-    rdfs:comment "The name/title of the deliverable." ;
-    rdfs:domain :Deliverable ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf dcterms:title .
-
-:deliverableStatus a owl:DatatypeProperty ;
-    rdfs:label "deliverable status" ;
-    rdfs:comment "Approval/review status of the deliverable." ;
-    rdfs:domain :Deliverable ;
-    rdfs:range xsd:string .
-
-:deliveredDate a owl:DatatypeProperty ;
-    rdfs:label "delivered date" ;
-    rdfs:comment "The actual submission date of the deliverable." ;
-    rdfs:domain :Deliverable ;
-    rdfs:range xsd:date ;
-    rdfs:subPropertyOf prov:generatedAtTime .
-
-:description a owl:DatatypeProperty ;
-    rdfs:label "description" ;
-    rdfs:comment "A description of a resource." ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf dcterms:description .
-
-:docTitle a owl:DatatypeProperty ;
-    rdfs:label "document title" ;
-    rdfs:comment "Title of the document." ;
-    rdfs:domain :Documentation ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf dcterms:title .
-
-:email a owl:DatatypeProperty ;
-    rdfs:label "email" ;
-    rdfs:comment "The email address of a stakeholder." ;
-    rdfs:domain :Stakeholder ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf schema:email .
-
-:endDate a owl:DatatypeProperty ;
-    rdfs:label "end date" ;
-    rdfs:comment "The end date/time of a project or phase." ;
-    rdfs:range xsd:date ;
-    rdfs:subPropertyOf prov:endedAtTime .
-
-:format a owl:DatatypeProperty ;
-    rdfs:label "format" ;
-    rdfs:comment "The file format of the document." ;
-    rdfs:domain :Documentation ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf dcterms:format .
-
-:futurePriority a owl:DatatypeProperty ;
-    rdfs:label "priority" ;
-    rdfs:comment "Priority of the future work (e.g. High, Low)." ;
-    rdfs:domain :FutureScope ;
-    rdfs:range xsd:string .
-
-:futureScopeID a owl:DatatypeProperty ;
-    rdfs:label "future scope ID" ;
-    rdfs:comment "Identifier of the future work item." ;
-    rdfs:domain :FutureScope ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf dcterms:identifier .
-
-:hasChallenge a owl:ObjectProperty ;
-    rdfs:label "has challenge" ;
-    rdfs:comment "Links a project to a challenge/constraint." ;
-    rdfs:domain :CapstoneProject ;
-    rdfs:range :Challenge .
-
-:hasEvaluationCriterion a owl:ObjectProperty ;
-    rdfs:label "has evaluation criterion" ;
-    rdfs:comment "Links a project to an evaluation criterion." ;
-    rdfs:domain :CapstoneProject ;
-    rdfs:range :EvaluationCriterion .
-
-:hasFutureScope a owl:ObjectProperty ;
-    rdfs:label "has future scope" ;
-    rdfs:comment "Links a project to a future work item." ;
-    rdfs:domain :CapstoneProject ;
-    rdfs:range :FutureScope .
-
-:hasRequirement a owl:ObjectProperty ;
-    rdfs:label "has requirement" ;
-    rdfs:comment "Links a project to a requirement." ;
-    rdfs:domain :CapstoneProject ;
-    rdfs:range :Requirement .
-
-:hasRisk a owl:ObjectProperty ;
-    rdfs:label "has risk" ;
-    rdfs:comment "Links a project to a risk item." ;
-    rdfs:domain :CapstoneProject ;
-    rdfs:range :Risk .
-
-:impact a owl:DatatypeProperty ;
-    rdfs:label "impact" ;
-    rdfs:comment "Estimated impact or severity of the risk." ;
-    rdfs:domain :Risk ;
-    rdfs:range xsd:decimal .
-
-:isActive a owl:DatatypeProperty ;
-    rdfs:label "is active" ;
-    rdfs:comment "Whether the team is currently active." ;
-    rdfs:domain :Team ;
-    rdfs:range xsd:boolean .
-
-:isMandatory a owl:DatatypeProperty ;
-    rdfs:label "is mandatory" ;
-    rdfs:comment "Whether the requirement is mandatory." ;
-    rdfs:domain :Requirement ;
-    rdfs:range xsd:boolean .
-
-:lastModified a owl:DatatypeProperty ;
-    rdfs:label "last modified" ;
-    rdfs:comment "The last revision date of the document." ;
-    rdfs:domain :Documentation ;
-    rdfs:range xsd:date ;
-    rdfs:subPropertyOf dcterms:modified .
-
-:managesProject a owl:ObjectProperty ;
-    rdfs:label "manages project" ;
-    rdfs:comment "Inverse of hasProjectManager; stakeholder manages a project." ;
-    rdfs:domain :Stakeholder ;
-    rdfs:range :CapstoneProject .
-
-:maxScore a owl:DatatypeProperty ;
-    rdfs:label "max score" ;
-    rdfs:comment "Maximum score for the criterion." ;
-    rdfs:domain :EvaluationCriterion ;
-    rdfs:range xsd:decimal .
-
-:mitigationPlan a owl:DatatypeProperty ;
-    rdfs:label "mitigation plan" ;
-    rdfs:comment "Planned response to the risk." ;
-    rdfs:domain :Risk ;
-    rdfs:range xsd:string .
-
-:objectives a owl:DatatypeProperty ;
-    rdfs:label "objectives" ;
-    rdfs:comment "Objectives or deliverables of the phase." ;
-    rdfs:domain :ProjectPhase ;
-    rdfs:range xsd:string .
-
-:organization a owl:DatatypeProperty ;
-    rdfs:label "organization" ;
-    rdfs:comment "The organization (affiliation) of a stakeholder." ;
-    rdfs:domain :Stakeholder ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf schema:affiliation .
-
-:pageCount a owl:DatatypeProperty ;
-    rdfs:label "page count" ;
-    rdfs:comment "Number of pages in the document." ;
-    rdfs:domain :Documentation ;
-    rdfs:range xsd:integer ;
-    rdfs:subPropertyOf schema:numberOfPages .
-
-:paradigm a owl:DatatypeProperty ;
-    rdfs:label "paradigm" ;
-    rdfs:comment "Programming paradigm of the language." ;
-    rdfs:domain :ProgrammingLanguage ;
-    rdfs:range xsd:string .
-
-:phaseName a owl:DatatypeProperty ;
-    rdfs:label "phase name" ;
-    rdfs:comment "Name of the project phase." ;
-    rdfs:domain :ProjectPhase ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf dcterms:title .
-
-:priority a owl:DatatypeProperty ;
-    rdfs:label "priority" ;
-    rdfs:comment "Priority or weight of the requirement." ;
-    rdfs:domain :Requirement ;
-    rdfs:range xsd:decimal .
-
-:probability a owl:DatatypeProperty ;
-    rdfs:label "probability" ;
-    rdfs:comment "Probability of the risk event (0.0–1.0)." ;
-    rdfs:domain :Risk ;
-    rdfs:range xsd:decimal .
-
-:projectStatus a owl:DatatypeProperty ;
-    rdfs:label "project status" ;
-    rdfs:comment "The status of the project." ;
-    rdfs:domain :CapstoneProject ;
-    rdfs:range xsd:string .
-
-:projectTitle a owl:DatatypeProperty ;
-    rdfs:label "project title" ;
-    rdfs:comment "The title of the project." ;
-    rdfs:domain :CapstoneProject ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf dcterms:title .
-
-:proposedWork a owl:DatatypeProperty ;
-    rdfs:label "proposed work" ;
-    rdfs:comment "Details of the planned future work." ;
-    rdfs:domain :FutureScope ;
-    rdfs:range xsd:string .
-
-:requirementID a owl:DatatypeProperty ;
-    rdfs:label "requirement ID" ;
-    rdfs:comment "Identifier of the requirement." ;
-    rdfs:domain :Requirement ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf dcterms:identifier .
-
-:requirementStatus a owl:DatatypeProperty ;
-    rdfs:label "requirement status" ;
-    rdfs:comment "Current status of the requirement." ;
-    rdfs:domain :Requirement ;
-    rdfs:range xsd:string .
-
-:resolution a owl:DatatypeProperty ;
-    rdfs:label "resolution" ;
-    rdfs:comment "Notes on how the challenge was addressed." ;
-    rdfs:domain :Challenge ;
-    rdfs:range xsd:string .
-
-:responsibilities a owl:DatatypeProperty ;
-    rdfs:label "responsibilities" ;
-    rdfs:comment "Responsibilities associated with the role." ;
-    rdfs:domain :Role ;
-    rdfs:range xsd:string .
-
-:riskID a owl:DatatypeProperty ;
-    rdfs:label "risk ID" ;
-    rdfs:comment "Identifier of the risk." ;
-    rdfs:domain :Risk ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf dcterms:identifier .
-
-:roleDescription a owl:DatatypeProperty ;
-    rdfs:label "role description" ;
-    rdfs:comment "Text describing the stakeholder’s role." ;
-    rdfs:domain :Stakeholder ;
-    rdfs:range xsd:string .
-
-:roleName a owl:DatatypeProperty ;
-    rdfs:label "role name" ;
-    rdfs:comment "The name of the role." ;
-    rdfs:domain :Role ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf schema:roleName .
-
-:scopeDescription a owl:DatatypeProperty ;
-    rdfs:label "scope description" ;
-    rdfs:comment "Description of the future work or extension." ;
-    rdfs:domain :FutureScope ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf dcterms:description .
-
-:severity a owl:DatatypeProperty ;
-    rdfs:label "severity" ;
-    rdfs:comment "Severity level of the challenge (e.g. High, Medium, Low)." ;
-    rdfs:domain :Challenge ;
-    rdfs:range xsd:string .
-
-:softwareVersion a owl:DatatypeProperty ;
-    rdfs:label "software version" ;
-    rdfs:comment "Version of the software tool." ;
-    rdfs:domain :SoftwareTool ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf schema:version .
-
-:startDate a owl:DatatypeProperty ;
-    rdfs:label "start date" ;
-    rdfs:comment "The start date/time of a project or phase." ;
-    rdfs:range xsd:date ;
-    rdfs:subPropertyOf prov:startedAtTime .
-
-:teamName a owl:DatatypeProperty ;
-    rdfs:label "team name" ;
-    rdfs:comment "Name of the project team." ;
-    rdfs:domain :Team ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf schema:name .
-
-:techName a owl:DatatypeProperty ;
-    rdfs:label "technology name" ;
-    rdfs:comment "Name of the technology (e.g. language or tool)." ;
-    rdfs:domain :Technology ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf dcterms:title .
-
-:type a owl:DatatypeProperty ;
-    rdfs:label "type" ;
-    rdfs:comment "Category (type) of the requirement." ;
-    rdfs:domain :Requirement ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf dcterms:type .
-
-:usesTechnology a owl:ObjectProperty ;
-    rdfs:label "uses technology" ;
-    rdfs:comment "Indicates a technology used in the project." ;
-    rdfs:domain :CapstoneProject ;
-    rdfs:range :Technology .
-
-:version a owl:DatatypeProperty ;
-    rdfs:label "version" ;
-    rdfs:comment "Version of the technology." ;
-    rdfs:domain :Technology ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf schema:version .
-
-:weight a owl:DatatypeProperty ;
-    rdfs:label "weight" ;
-    rdfs:comment "Weight of the evaluation criterion." ;
-    rdfs:domain :EvaluationCriterion ;
-    rdfs:range xsd:decimal .
-
-:Prototype a owl:Class ;
-    rdfs:label "Prototype" ;
-    rdfs:comment "A prototype deliverable." ;
-    rdfs:subClassOf schema:CreativeWork .
-    
-        
-:SoftwareTool a owl:Class ;
-    rdfs:label "Software Tool" ;
-    rdfs:comment "A software tool used in the project." ;
-    rdfs:subClassOf :Technology .
-   
-:dueDate a owl:DatatypeProperty ;
-    rdfs:label "due date" ;
-    rdfs:comment "The scheduled deadline of the deliverable." ;
-    rdfs:domain :Deliverable ;
-    rdfs:range xsd:date .
-
-:hasDeliverable a owl:ObjectProperty ;
-    rdfs:label "has deliverable" ;
-    rdfs:comment "Links a project to one of its deliverables." ;
-    rdfs:domain :CapstoneProject ;
-    rdfs:range :Deliverable .
-
-:hasPhase a owl:ObjectProperty ;
-    rdfs:label "has phase" ;
-    rdfs:comment "Links a project to one of its phases." ;
-    rdfs:domain :CapstoneProject ;
-    rdfs:range :ProjectPhase .
-
-:hasProjectManager a owl:ObjectProperty ;
-    rdfs:label "has project manager" ;
-    rdfs:comment "Links a project to its project manager." ;
-    rdfs:domain :CapstoneProject ;
-    rdfs:range :Stakeholder .
-
-:hasRole a owl:ObjectProperty ;
-    rdfs:label "has role" ;
-    rdfs:comment "Links a stakeholder to one of their roles." ;
-    rdfs:domain :Stakeholder ;
-    rdfs:range :Role .
-
-:hasStakeholder a owl:ObjectProperty ;
-    rdfs:label "has stakeholder" ;
-    rdfs:comment "Links a project to its stakeholders." ;
-    rdfs:domain :CapstoneProject ;
-    rdfs:range :Stakeholder .
-
-:hasTeam a owl:ObjectProperty ;
-    rdfs:label "has team" ;
-    rdfs:comment "Links a project to its team." ;
-    rdfs:domain :CapstoneProject ;
-    rdfs:range :Team .
-
-:isMemberOf a owl:ObjectProperty ;
-    rdfs:label "is member of" ;
-    rdfs:comment "Indicates that a stakeholder is a member of a team." ;
-    rdfs:domain :Stakeholder ;
-    rdfs:range :Team .
-
-:producedBy a owl:ObjectProperty ;
-    rdfs:label "produced by" ;
-    rdfs:comment "Associates a deliverable with its creator (stakeholder)." ;
-    rdfs:domain :Deliverable ;
-    rdfs:range :Stakeholder ;
-    rdfs:subPropertyOf prov:wasAttributedTo .
-
-dcterms:created a owl:DatatypeProperty ;
-    rdfs:label "created" ;
-    rdfs:comment "This element represents a creation date. This element is reused from the Dublin Core Terms vocabulary." .
-
-dcterms:format a owl:DatatypeProperty ;
-    rdfs:label "format" ;
-    rdfs:comment "This element represents a format type. This element is reused from the Dublin Core Terms vocabulary." .
-
-dcterms:modified a owl:DatatypeProperty ;
-    rdfs:label "modified" ;
-    rdfs:comment "This element represents the last modification date. This element is reused from the Dublin Core Terms vocabulary." .
-
-dcterms:type a owl:DatatypeProperty ;
-    rdfs:label "type" ;
-    rdfs:comment "This element represents a type. This element is reused from the Dublin Core Terms vocabulary." .
-
-schema:affiliation a owl:DatatypeProperty ;
-    rdfs:label "affiliation" ;
-    rdfs:comment "This element represents an affiliation. This element is reused from the Schema.org vocabulary." .
-
-schema:email a owl:DatatypeProperty ;
-    rdfs:label "email" ;
-    rdfs:comment "This element represents an email address. This element is reused from the Schema.org vocabulary." .
-
-schema:numberOfPages a owl:DatatypeProperty ;
-    rdfs:label "numberOfPages" ;
-    rdfs:comment "This element represents the number of pages. This element is reused from the Schema.org vocabulary." .
-
-schema:roleName a owl:DatatypeProperty ;
-    rdfs:label "roleName" ;
-    rdfs:comment "This element represents a role name. This element is reused from the Schema.org vocabulary." .
-
-schema:telephone a owl:DatatypeProperty ;
-    rdfs:label "telephone" ;
-    rdfs:comment "This element represents a telephone number. This element is reused from the Schema.org vocabulary." .
-
-prov:endedAtTime a owl:DatatypeProperty ;
-    rdfs:label "endedAtTime" ;
-    rdfs:comment "This element represents the end time. This element is reused from the PROV-O ontology." .
-
-prov:generatedAtTime a owl:DatatypeProperty ;
-    rdfs:label "generatedAtTime" ;
-    rdfs:comment "This element represents the time of generation. This element is reused from the PROV-O ontology." .
-
-prov:startedAtTime a owl:DatatypeProperty ;
-    rdfs:label "startedAtTime" ;
-    rdfs:comment "This element represents the start time. This element is reused from the PROV-O ontology." .
-
-prov:wasAttributedTo a owl:ObjectProperty ;
-    rdfs:label "wasAttributedTo" ;
-    rdfs:comment "This element represents the attribution relationship. This element is reused from the PROV-O ontology." .
-
-foaf:name a owl:DatatypeProperty ;
-    rdfs:label "name (FOAF)" ;
-    rdfs:comment "This element represents a name in FOAF. This element is reused from the FOAF vocabulary." ;
-    owl:equivalentProperty :name,
-        schema:name .
-
-:name a owl:DatatypeProperty ;
-    rdfs:label "name" ;
-    rdfs:comment "The name of a person or team." ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf foaf:name .
-
-:teamSize a owl:DatatypeProperty ;
-    rdfs:label "team size" ;
-    rdfs:comment "The number of members in a project or team." ;
-    rdfs:range xsd:integer .
-
-dcterms:description a owl:DatatypeProperty ;
-    rdfs:label "description" ;
-    rdfs:comment "This element represents a description. This element is reused from the Dublin Core Terms vocabulary." .
-
-schema:name a owl:DatatypeProperty ;
-    rdfs:label "name" ;
-    rdfs:comment "This element represents a name. This element is reused from the Schema.org vocabulary." ;
-    owl:equivalentProperty :name .
-
-schema:version a owl:DatatypeProperty ;
-    rdfs:label "version" ;
-    rdfs:comment "This element represents a version. This element is reused from the Schema.org vocabulary." .
-
-:Poster a owl:Class ;
-    rdfs:label "Poster" ;
-    rdfs:comment "A poster deliverable." ;
-    rdfs:subClassOf schema:CreativeWork .
-    
-
-:status a owl:DatatypeProperty ;
-    rdfs:label "status" ;
-    rdfs:comment "Status of a phase, deliverable, or challenge." ;
-    rdfs:range xsd:string .
-
-:Evaluation a owl:Class ;
-    rdfs:label "Evaluation" ;
-    rdfs:comment "The process or activity of evaluating the project." ;
-    rdfs:subClassOf prov:Activity .
-    
-
-dcterms:identifier a owl:DatatypeProperty ;
-    rdfs:label "identifier" ;
-    rdfs:comment "This element represents identifier. This element is reused from the Dublin Core Terms vocabulary." .
-
-:Supervisor a owl:Class ;
-    rdfs:label "Supervisor" ;
-    rdfs:comment "A stakeholder who supervises the project." ;
-    rdfs:subClassOf :Stakeholder .
-    
-
-:ClosurePhase a owl:Class ;
-    rdfs:label "Closure Phase" ;
-    rdfs:comment "The final (closure) phase of the project." ;
-    rdfs:subClassOf :ProjectPhase .
-    
-
-dcterms:title a owl:DatatypeProperty ;
-    rdfs:label "title" ;
-    rdfs:comment "This element represents a title. This element is reused from the Dublin Core Terms vocabulary." .
-
-xsd:date a rdfs:Datatype .
-
-:PlanningPhase a owl:Class ;
-    rdfs:label "Planning Phase" ;
-    rdfs:comment "The planning phase of the project." ;
-    rdfs:subClassOf :ProjectPhase .
-    
-
-:RequirementsDocument a owl:Class ;
-    rdfs:label "Requirements Document" ;
-    rdfs:comment "A document listing project requirements." ;
-    rdfs:subClassOf :Documentation .
-    
-:Technology a owl:Class ;
-    rdfs:label "Technology" ;
-    rdfs:comment "A generic technology (language, tool, etc.) used in the project." .
-    
-
-:ScheduleRisk a owl:Class ;
-    rdfs:label "Schedule Risk" ;
-    rdfs:comment "A scheduling risk in the project." ;
-    rdfs:subClassOf :Risk .
-    
-:Timeliness a owl:Class ;
-    rdfs:label "Timeliness" ;
-    rdfs:comment "An evaluation criterion for meeting deadlines." ;
-    rdfs:subClassOf :EvaluationCriterion .
-    
-:Viva a owl:Class ;
-    rdfs:label "Viva" ;
-    rdfs:comment "An evaluation criterion related to the viva examination." ;
-    rdfs:subClassOf :EvaluationCriterion .
-    
-schema:CreativeWork a owl:Class ;
-    rdfs:label "CreativeWork" ;
-    rdfs:comment "This element represents CreativeWork. This element is reused from the Schema.org vocabulary." .
-    
-:Functionality a owl:Class ;
-    rdfs:label "Functionality" ;
-    rdfs:comment "An evaluation criterion for functionality." ;
-    rdfs:subClassOf :EvaluationCriterion .
-    
-
-prov:Activity a owl:Class ;
-    rdfs:label "Activity" ;
-    rdfs:comment "This element represents Activity. This element is reused from the PROV-O ontology." .
-    
-
-:ResourceConstraint a owl:Class ;
-    rdfs:label "Resource Constraint" ;
-    rdfs:comment "A resource-related constraint." ;
-    rdfs:subClassOf :Challenge .
-    
-:SoftwareSystem a owl:Class ;
-    rdfs:label "Software System" ;
-    rdfs:comment "A software application produced by the project." .
-    
-
-:Designer a owl:Class ;
-    rdfs:label "Designer" ;
-    rdfs:comment "A role for a stakeholder who designs system components." ;
-    rdfs:subClassOf :Role .
-    
-:InitiationPhase a owl:Class ;
-    rdfs:label "Initiation Phase" ;
-    rdfs:comment "The initial phase of the project." ;
-    rdfs:subClassOf :ProjectPhase .
-    
-:ExecutionPhase a owl:Class ;
-    rdfs:label "Execution Phase" ;
-    rdfs:comment "The execution (development) phase of the project." ;
-    rdfs:subClassOf :ProjectPhase .
-    
-
-:ProjectPlan a owl:Class ;
-    rdfs:label "Project Plan" ;
-    rdfs:comment "A planning document for the project." ;
-    rdfs:subClassOf :Documentation .
-    
-
-schema:Project a owl:Class ;
-    rdfs:label "Project" ;
-    rdfs:comment "This element represents Project. This element is reused from the Schema.org vocabulary." .
-    
-
-:Student a owl:Class ;
-    rdfs:label "Student" ;
-    rdfs:comment "A stakeholder who is a student." ;
-    rdfs:subClassOf :Stakeholder .
-    
-
-foaf:Person a owl:Class ;
-    rdfs:label "Person" ;
-    rdfs:comment "This element represents Person. This element is reused from the FOAF vocabulary." .
-    
-
-:FutureScope a owl:Class ;
-    rdfs:label "Future Scope" ;
-    rdfs:comment "Future work or extension items." .
-    
-
-:Advisor a owl:Class ;
-    rdfs:label "Advisor" ;
-    rdfs:comment "A role for a stakeholder who advises the team." ;
-    rdfs:subClassOf :Role .
-    
-:Extension a owl:Class ;
-    rdfs:label "Extension" ;
-    rdfs:comment "A proposed extension of the project." ;
-    rdfs:subClassOf :FutureScope .
-    
-:Framework a owl:Class ;
-    rdfs:label "Framework" ;
-    rdfs:comment "A software framework used in the project." ;
-    rdfs:subClassOf :Technology .
-    
-
-:Challenge a owl:Class ;
-    rdfs:label "Challenge" ;
-    rdfs:comment "A challenge or constraint in the project." ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty :status ] .
-    
-
-:StakeholderRegister a owl:Class ;
-    rdfs:label "Stakeholder Register" ;
-    rdfs:comment "A register listing stakeholders." ;
-    rdfs:subClassOf :Documentation .
-    
-
-:ProjectPhase a owl:Class ;
-    rdfs:label "Project Phase" ;
-    rdfs:comment "A phase of the capstone project (e.g. initiation, planning)." ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty :status ],
-        prov:Activity .
-    
-
-:FutureWork a owl:Class ;
-    rdfs:label "Future Work" ;
-    rdfs:comment "A proposed future work item." ;
-    rdfs:subClassOf :FutureScope .
-    
-
-:Innovation a owl:Class ;
-    rdfs:label "Innovation" ;
-    rdfs:comment "An evaluation criterion for innovation." ;
-    rdfs:subClassOf :EvaluationCriterion .
-    
-:Evaluator a owl:Class ;
-    rdfs:label "Evaluator" ;
-    rdfs:comment "A stakeholder who evaluates the project." ;
-    rdfs:subClassOf :Stakeholder .
-    
-
-:ProgrammingLanguage a owl:Class ;
-    rdfs:label "Programming Language" ;
-    rdfs:comment "A programming language used in the project." ;
-    rdfs:subClassOf schema:ComputerLanguage .
-    
-
-schema:Role a owl:Class ;
-    rdfs:label "Role" ;
-    rdfs:comment "This element represents a role. This element is reused from the Schema.org vocabulary." .
-    
-
-schema:SoftwareApplication a owl:Class ;
-    rdfs:label "SoftwareApplication" ;
-    rdfs:comment "This element represents SoftwareApplication. This element is reused from the Schema.org vocabulary." ;
-    rdfs:subClassOf :Deliverable .
-    
-
-:Documentation a owl:Class ;
-    rdfs:label "Documentation" ;
-    rdfs:comment "A documentation-type deliverable (abstract class for project documents)." ;
-    rdfs:subClassOf :Deliverable .
-    
-
-:ProjectManager a owl:Class ;
-    rdfs:label "Project Manager" ;
-    rdfs:comment "A role for a stakeholder who manages the project." ;
-    rdfs:subClassOf :Role .
-    
-
-:TestPlan_TestReport a owl:Class ;
-    rdfs:label "Test Plan/Test Report" ;
-    rdfs:comment "A test plan and report document." ;
-    rdfs:subClassOf :Documentation .
-    
-
-:Stakeholder a owl:Class ;
-    rdfs:label "Stakeholder" ;
-    rdfs:comment "A person involved in the capstone project." ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:cardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onProperty :hasRole ],
-        [ a owl:Restriction ;
-            owl:cardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onProperty :isMemberOf ],
-        foaf:Person .
-    
-:TechnicalRisk a owl:Class ;
-    rdfs:label "Technical Risk" ;
-    rdfs:comment "A technical risk in the project." ;
-    rdfs:subClassOf :Risk .
-    
-
-
-schema:ComputerLanguage a owl:Class ;
-    rdfs:label "ComputerLanguage" ;
-    rdfs:comment "This element represents a computer language. This element is reused from the Schema.org vocabulary." ;
-    rdfs:subClassOf :Technology .
-    
-
-
-:Developer a owl:Class ;
-    rdfs:label "Developer" ;
-    rdfs:comment "A role for a stakeholder who develops the system." ;
-    rdfs:subClassOf :Role .
-    
-
-:Team a owl:Class ;
-    rdfs:label "Team" ;
-    rdfs:comment "A team of stakeholders in the project." ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom xsd:integer ;
-            owl:onProperty :teamSize ],
-        schema:Organization .
-    
-
-:TimeConstraint a owl:Class ;
-    rdfs:label "Time Constraint" ;
-    rdfs:comment "A time-related constraint." ;
-    rdfs:subClassOf :Challenge .
-    
-
-:Instructor a owl:Class ;
-    rdfs:label "Instructor" ;
-    rdfs:comment "A stakeholder who is an instructor of the course." ;
-    rdfs:subClassOf :Stakeholder .
-    
-
-:CapstoneProject a owl:Class ;
-    rdfs:label "Capstone Project" ;
-    rdfs:comment "A planned capstone project with specific goals." ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:cardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onProperty :hasTeam ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:integer ;
-            owl:onProperty :teamSize ],
-        [ a owl:Restriction ;
-            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onProperty :hasDeliverable ],
-        [ a owl:Restriction ;
-            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onProperty :hasPhase ],
-        [ a owl:Restriction ;
-            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onProperty :hasStakeholder ],
-        [ a owl:Restriction ;
-            owl:cardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onProperty :hasProjectManager ],
-        schema:Project .
-    
-
-:FinalReport a owl:Class ;
-    rdfs:label "Final Report" ;
-    rdfs:comment "The final project report document." ;
-    rdfs:subClassOf :Documentation .
-    
-
-schema:Organization a owl:Class ;
-    rdfs:label "Organization" ;
-    rdfs:comment "This element represents an organization. This element is reused from the Schema.org vocabulary." .
-    
-
-:ProjectSchedule a owl:Class ;
-    rdfs:label "Project Schedule" ;
-    rdfs:comment "A schedule/timeline document for the project." ;
-    rdfs:subClassOf :Documentation .
-    
-
-:Presentation a owl:Class ;
-    rdfs:label "Presentation" ;
-    rdfs:comment "A presentation deliverable." ;
-    rdfs:subClassOf schema:CreativeWork .
-    
-:BudgetRisk a owl:Class ;
-    rdfs:label "Budget Risk" ;
-    rdfs:comment "A budgetary risk in the project." ;
-    rdfs:subClassOf :Risk .
-    
-:ProjectTeam a owl:Class ;
-    rdfs:label "Project Team" ;
-    rdfs:comment "A specific project team." ;
-    rdfs:subClassOf :Team .
-    
-
-:Risk a owl:Class ;
-    rdfs:label "Risk" ;
-    rdfs:comment "A generic risk item in the project." .
-    
-:Database a owl:Class ;
-    rdfs:label "Database" ;
-    rdfs:comment "A database technology used in the project." ;
-    rdfs:subClassOf :Technology .
-    
-
-:TeamLeader a owl:Class ;
-    rdfs:label "Team Leader" ;
-    rdfs:comment "A role for a stakeholder leading a team." ;
-    rdfs:subClassOf :Role .
-    
-
-:Requirement a owl:Class ;
-    rdfs:label "Requirement" ;
-    rdfs:comment "A requirement for the project." .
-    
-
-:UserManual a owl:Class ;
-    rdfs:label "User Manual" ;
-    rdfs:comment "A user manual deliverable." ;
-    rdfs:subClassOf :Documentation .
-    
-
-prov:Entity a owl:Class ;
-    rdfs:label "Entity" ;
-    rdfs:comment "This element represents an entity. This element is reused from the PROV-O ontology." .
-    
-:ProjectProposal a owl:Class ;
-    rdfs:label "Project Proposal" ;
-    rdfs:comment "A proposal document for the project." ;
-    rdfs:subClassOf :Documentation .
-    
-
-:Deliverable a owl:Class ;
-    rdfs:label "Deliverable" ;
-    rdfs:comment "An artifact produced by the project (e.g. document or demo)." ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onProperty :dueDate ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty :status ],
-        [ a owl:Restriction ;
-            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onProperty :producedBy ],
-        schema:CreativeWork,
-        prov:Entity .
-    
-
-:Tester a owl:Class ;
-    rdfs:label "Tester" ;
-    rdfs:comment "A role for a stakeholder who tests the system." ;
-    rdfs:subClassOf :Role ;
-    owl:disjointWith :EvaluationCriterion .
-
-:Role a owl:Class ;
-    rdfs:label "Role" ;
-    rdfs:comment "A role or position that a stakeholder can assume." ;
-    rdfs:subClassOf schema:Role ;
-    owl:disjointWith :EvaluationCriterion .
-
-:EvaluationCriterion a owl:Class ;
-    rdfs:label "Evaluation Criterion" ;
-    rdfs:comment "A criterion used to evaluate the project." .
-
-[] a owl:Ontology ;
-    dcterms:created "2025-05-18"^^xsd:date ;
-    dcterms:creator "Hadia and Team"@en ;
-    dcterms:description "This ontology models concepts relevant to capstone project documentation and management."@en ;
-    dcterms:title "Capstone Project Ontology"@en ;
-    owl:versionInfo "1.0"@en .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://example.org/capstone#> .
 
+[ rdf:type owl:Ontology ;
+   dcterms:creator "Hadia and Team"@en ;
+   owl:versionInfo "1.0"@en
+ ] .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://example.org/capstone#hasChallenge
+:hasChallenge rdf:type owl:ObjectProperty ;
+              rdfs:domain :CapstoneProject ;
+              rdfs:range :Challenge ;
+              rdfs:comment "Links a project to a challenge/constraint." ;
+              rdfs:label "has challenge" .
+
+
+###  http://example.org/capstone#hasDeliverable
+:hasDeliverable rdf:type owl:ObjectProperty ;
+                rdfs:domain :CapstoneProject ;
+                rdfs:range :Deliverable ;
+                rdfs:comment "Links a project to one of its deliverables." ;
+                rdfs:label "has deliverable" .
+
+
+###  http://example.org/capstone#hasEvaluationCriterion
+:hasEvaluationCriterion rdf:type owl:ObjectProperty ;
+                        rdfs:domain :CapstoneProject ;
+                        rdfs:range :EvaluationCriterion ;
+                        rdfs:comment "Links a project to an evaluation criterion." ;
+                        rdfs:label "has evaluation criterion" .
+
+
+###  http://example.org/capstone#hasFutureScope
+:hasFutureScope rdf:type owl:ObjectProperty ;
+                rdfs:domain :CapstoneProject ;
+                rdfs:range :FutureScope ;
+                rdfs:comment "Links a project to a future work item." ;
+                rdfs:label "has future scope" .
+
+
+###  http://example.org/capstone#hasPhase
+:hasPhase rdf:type owl:ObjectProperty ;
+          rdfs:domain :CapstoneProject ;
+          rdfs:range :ProjectPhase ;
+          rdfs:comment "Links a project to one of its phases." ;
+          rdfs:label "has phase" .
+
+
+###  http://example.org/capstone#hasProjectManager
+:hasProjectManager rdf:type owl:ObjectProperty ;
+                   rdfs:domain :CapstoneProject ;
+                   rdfs:range :Stakeholder ;
+                   rdfs:comment "Links a project to its project manager." ;
+                   rdfs:label "has project manager" .
+
+
+###  http://example.org/capstone#hasRequirement
+:hasRequirement rdf:type owl:ObjectProperty ;
+                rdfs:domain :CapstoneProject ;
+                rdfs:range :Requirement ;
+                rdfs:comment "Links a project to a requirement." ;
+                rdfs:label "has requirement" .
+
+
+###  http://example.org/capstone#hasRisk
+:hasRisk rdf:type owl:ObjectProperty ;
+         rdfs:domain :CapstoneProject ;
+         rdfs:range :Risk ;
+         rdfs:comment "Links a project to a risk item." ;
+         rdfs:label "has risk" .
+
+
+###  http://example.org/capstone#hasRole
+:hasRole rdf:type owl:ObjectProperty ;
+         rdfs:domain :Stakeholder ;
+         rdfs:range :Role ;
+         rdfs:comment "Links a stakeholder to one of their roles." ;
+         rdfs:label "has role" .
+
+
+###  http://example.org/capstone#hasStakeholder
+:hasStakeholder rdf:type owl:ObjectProperty ;
+                rdfs:domain :CapstoneProject ;
+                rdfs:range :Stakeholder ;
+                rdfs:comment "Links a project to its stakeholders." ;
+                rdfs:label "has stakeholder" .
+
+
+###  http://example.org/capstone#hasTeam
+:hasTeam rdf:type owl:ObjectProperty ;
+         rdfs:domain :CapstoneProject ;
+         rdfs:range :Team ;
+         rdfs:comment "Links a project to its team." ;
+         rdfs:label "has team" .
+
+
+###  http://example.org/capstone#isMemberOf
+:isMemberOf rdf:type owl:ObjectProperty ;
+            rdfs:domain :Stakeholder ;
+            rdfs:range :Team ;
+            rdfs:comment "Indicates that a stakeholder is a member of a team." ;
+            rdfs:label "is member of" .
+
+
+###  http://example.org/capstone#managesProject
+:managesProject rdf:type owl:ObjectProperty ;
+                rdfs:domain :Stakeholder ;
+                rdfs:range :CapstoneProject ;
+                rdfs:comment "Inverse of hasProjectManager; stakeholder manages a project." ;
+                rdfs:label "manages project" .
+
+
+###  http://example.org/capstone#producedBy
+:producedBy rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf prov:wasAttributedTo ;
+            rdfs:domain :Deliverable ;
+            rdfs:range :Stakeholder ;
+            rdfs:comment "Associates a deliverable with its creator (stakeholder)." ;
+            rdfs:label "produced by" .
+
+
+###  http://example.org/capstone#usesTechnology
+:usesTechnology rdf:type owl:ObjectProperty ;
+                rdfs:domain :CapstoneProject ;
+                rdfs:range :Technology ;
+                rdfs:comment "Indicates a technology used in the project." ;
+                rdfs:label "uses technology" .
+
+
+###  http://www.w3.org/ns/prov#wasAttributedTo
+prov:wasAttributedTo rdf:type owl:ObjectProperty ;
+                     rdfs:comment "This element represents the attribution relationship. This element is reused from the PROV-O ontology." ;
+                     rdfs:label "wasAttributedTo" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://example.org/capstone#budget
+:budget rdf:type owl:DatatypeProperty ;
+        rdfs:domain :CapstoneProject ;
+        rdfs:range xsd:decimal ;
+        rdfs:comment "The budget for the project." ;
+        rdfs:label "budget" .
+
+
+###  http://example.org/capstone#challengeID
+:challengeID rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf dcterms:identifier ;
+             rdfs:domain :Challenge ;
+             rdfs:range xsd:string ;
+             rdfs:comment "Identifier of the challenge." ;
+             rdfs:label "challenge ID" .
+
+
+###  http://example.org/capstone#confidentiality
+:confidentiality rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :Documentation ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "Access level or privacy label of the document." ;
+                 rdfs:label "confidentiality" .
+
+
+###  http://example.org/capstone#contactNumber
+:contactNumber rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf schema:telephone ;
+               rdfs:domain :Stakeholder ;
+               rdfs:range xsd:string ;
+               rdfs:comment "Contact telephone number of the stakeholder." ;
+               rdfs:label "contact number" .
+
+
+###  http://example.org/capstone#creationDate
+:creationDate rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf dcterms:created ;
+              rdfs:domain :Documentation ;
+              rdfs:range xsd:date ;
+              rdfs:comment "The creation date of the document." ;
+              rdfs:label "creation date" .
+
+
+###  http://example.org/capstone#criterionName
+:criterionName rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf dcterms:title ;
+               rdfs:domain :EvaluationCriterion ;
+               rdfs:range xsd:string ;
+               rdfs:comment "Name of the evaluation criterion." ;
+               rdfs:label "criterion name" .
+
+
+###  http://example.org/capstone#dbType
+:dbType rdf:type owl:DatatypeProperty ;
+        rdfs:domain :Database ;
+        rdfs:range xsd:string ;
+        rdfs:comment "Type of the database (e.g. SQL/NoSQL)." ;
+        rdfs:label "database type" .
+
+
+###  http://example.org/capstone#deliverableName
+:deliverableName rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf dcterms:title ;
+                 rdfs:domain :Deliverable ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "The name/title of the deliverable." ;
+                 rdfs:label "deliverable name" .
+
+
+###  http://example.org/capstone#deliverableStatus
+:deliverableStatus rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :Deliverable ;
+                   rdfs:range xsd:string ;
+                   rdfs:comment "Approval/review status of the deliverable." ;
+                   rdfs:label "deliverable status" .
+
+
+###  http://example.org/capstone#deliveredDate
+:deliveredDate rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf prov:generatedAtTime ;
+               rdfs:domain :Deliverable ;
+               rdfs:range xsd:date ;
+               rdfs:comment "The actual submission date of the deliverable." ;
+               rdfs:label "delivered date" .
+
+
+###  http://example.org/capstone#description
+:description rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf dcterms:description ;
+             rdfs:range xsd:string ;
+             rdfs:comment "A description of a resource." ;
+             rdfs:label "description" .
+
+
+###  http://example.org/capstone#docTitle
+:docTitle rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf dcterms:title ;
+          rdfs:domain :Documentation ;
+          rdfs:range xsd:string ;
+          rdfs:comment "Title of the document." ;
+          rdfs:label "document title" .
+
+
+###  http://example.org/capstone#dueDate
+:dueDate rdf:type owl:DatatypeProperty ;
+         rdfs:domain :Deliverable ;
+         rdfs:range xsd:date ;
+         rdfs:comment "The scheduled deadline of the deliverable." ;
+         rdfs:label "due date" .
+
+
+###  http://example.org/capstone#email
+:email rdf:type owl:DatatypeProperty ;
+       rdfs:subPropertyOf schema:email ;
+       rdfs:domain :Stakeholder ;
+       rdfs:range xsd:string ;
+       rdfs:comment "The email address of a stakeholder." ;
+       rdfs:label "email" .
+
+
+###  http://example.org/capstone#endDate
+:endDate rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf prov:endedAtTime ;
+         rdfs:range xsd:date ;
+         rdfs:comment "The end date/time of a project or phase." ;
+         rdfs:label "end date" .
+
+
+###  http://example.org/capstone#format
+:format rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf dcterms:format ;
+        rdfs:domain :Documentation ;
+        rdfs:range xsd:string ;
+        rdfs:comment "The file format of the document." ;
+        rdfs:label "format" .
+
+
+###  http://example.org/capstone#futurePriority
+:futurePriority rdf:type owl:DatatypeProperty ;
+                rdfs:domain :FutureScope ;
+                rdfs:range xsd:string ;
+                rdfs:comment "Priority of the future work (e.g. High, Low)." ;
+                rdfs:label "priority" .
+
+
+###  http://example.org/capstone#futureScopeID
+:futureScopeID rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf dcterms:identifier ;
+               rdfs:domain :FutureScope ;
+               rdfs:range xsd:string ;
+               rdfs:comment "Identifier of the future work item." ;
+               rdfs:label "future scope ID" .
+
+
+###  http://example.org/capstone#impact
+:impact rdf:type owl:DatatypeProperty ;
+        rdfs:domain :Risk ;
+        rdfs:range xsd:decimal ;
+        rdfs:comment "Estimated impact or severity of the risk." ;
+        rdfs:label "impact" .
+
+
+###  http://example.org/capstone#isActive
+:isActive rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Team ;
+          rdfs:range xsd:boolean ;
+          rdfs:comment "Whether the team is currently active." ;
+          rdfs:label "is active" .
+
+
+###  http://example.org/capstone#isMandatory
+:isMandatory rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Requirement ;
+             rdfs:range xsd:boolean ;
+             rdfs:comment "Whether the requirement is mandatory." ;
+             rdfs:label "is mandatory" .
+
+
+###  http://example.org/capstone#lastModified
+:lastModified rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf dcterms:modified ;
+              rdfs:domain :Documentation ;
+              rdfs:range xsd:date ;
+              rdfs:comment "The last revision date of the document." ;
+              rdfs:label "last modified" .
+
+
+###  http://example.org/capstone#maxScore
+:maxScore rdf:type owl:DatatypeProperty ;
+          rdfs:domain :EvaluationCriterion ;
+          rdfs:range xsd:decimal ;
+          rdfs:comment "Maximum score for the criterion." ;
+          rdfs:label "max score" .
+
+
+###  http://example.org/capstone#mitigationPlan
+:mitigationPlan rdf:type owl:DatatypeProperty ;
+                rdfs:domain :Risk ;
+                rdfs:range xsd:string ;
+                rdfs:comment "Planned response to the risk." ;
+                rdfs:label "mitigation plan" .
+
+
+###  http://example.org/capstone#name
+:name rdf:type owl:DatatypeProperty ;
+      owl:equivalentProperty schema:name ,
+                             foaf:name ;
+      rdfs:subPropertyOf foaf:name ;
+      rdfs:range xsd:string ;
+      rdfs:comment "The name of a person or team." ;
+      rdfs:label "name" .
+
+
+###  http://example.org/capstone#objectives
+:objectives rdf:type owl:DatatypeProperty ;
+            rdfs:domain :ProjectPhase ;
+            rdfs:range xsd:string ;
+            rdfs:comment "Objectives or deliverables of the phase." ;
+            rdfs:label "objectives" .
+
+
+###  http://example.org/capstone#organization
+:organization rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf schema:affiliation ;
+              rdfs:domain :Stakeholder ;
+              rdfs:range xsd:string ;
+              rdfs:comment "The organization (affiliation) of a stakeholder." ;
+              rdfs:label "organization" .
+
+
+###  http://example.org/capstone#pageCount
+:pageCount rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf schema:numberOfPages ;
+           rdfs:domain :Documentation ;
+           rdfs:range xsd:integer ;
+           rdfs:comment "Number of pages in the document." ;
+           rdfs:label "page count" .
+
+
+###  http://example.org/capstone#paradigm
+:paradigm rdf:type owl:DatatypeProperty ;
+          rdfs:domain :ProgrammingLanguage ;
+          rdfs:range xsd:string ;
+          rdfs:comment "Programming paradigm of the language." ;
+          rdfs:label "paradigm" .
+
+
+###  http://example.org/capstone#phaseName
+:phaseName rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf dcterms:title ;
+           rdfs:domain :ProjectPhase ;
+           rdfs:range xsd:string ;
+           rdfs:comment "Name of the project phase." ;
+           rdfs:label "phase name" .
+
+
+###  http://example.org/capstone#priority
+:priority rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Requirement ;
+          rdfs:range xsd:decimal ;
+          rdfs:comment "Priority or weight of the requirement." ;
+          rdfs:label "priority" .
+
+
+###  http://example.org/capstone#probability
+:probability rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Risk ;
+             rdfs:range xsd:decimal ;
+             rdfs:comment "Probability of the risk event (0.0–1.0)." ;
+             rdfs:label "probability" .
+
+
+###  http://example.org/capstone#projectStatus
+:projectStatus rdf:type owl:DatatypeProperty ;
+               rdfs:domain :CapstoneProject ;
+               rdfs:range xsd:string ;
+               rdfs:comment "The status of the project." ;
+               rdfs:label "project status" .
+
+
+###  http://example.org/capstone#projectTitle
+:projectTitle rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf dcterms:title ;
+              rdfs:domain :CapstoneProject ;
+              rdfs:range xsd:string ;
+              rdfs:comment "The title of the project." ;
+              rdfs:label "project title" .
+
+
+###  http://example.org/capstone#proposedWork
+:proposedWork rdf:type owl:DatatypeProperty ;
+              rdfs:domain :FutureScope ;
+              rdfs:range xsd:string ;
+              rdfs:comment "Details of the planned future work." ;
+              rdfs:label "proposed work" .
+
+
+###  http://example.org/capstone#requirementID
+:requirementID rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf dcterms:identifier ;
+               rdfs:domain :Requirement ;
+               rdfs:range xsd:string ;
+               rdfs:comment "Identifier of the requirement." ;
+               rdfs:label "requirement ID" .
+
+
+###  http://example.org/capstone#requirementStatus
+:requirementStatus rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :Requirement ;
+                   rdfs:range xsd:string ;
+                   rdfs:comment "Current status of the requirement." ;
+                   rdfs:label "requirement status" .
+
+
+###  http://example.org/capstone#resolution
+:resolution rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Challenge ;
+            rdfs:range xsd:string ;
+            rdfs:comment "Notes on how the challenge was addressed." ;
+            rdfs:label "resolution" .
+
+
+###  http://example.org/capstone#responsibilities
+:responsibilities rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :Role ;
+                  rdfs:range xsd:string ;
+                  rdfs:comment "Responsibilities associated with the role." ;
+                  rdfs:label "responsibilities" .
+
+
+###  http://example.org/capstone#riskID
+:riskID rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf dcterms:identifier ;
+        rdfs:domain :Risk ;
+        rdfs:range xsd:string ;
+        rdfs:comment "Identifier of the risk." ;
+        rdfs:label "risk ID" .
+
+
+###  http://example.org/capstone#roleDescription
+:roleDescription rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :Stakeholder ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "Text describing the stakeholder’s role." ;
+                 rdfs:label "role description" .
+
+
+###  http://example.org/capstone#roleName
+:roleName rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf schema:roleName ;
+          rdfs:domain :Role ;
+          rdfs:range xsd:string ;
+          rdfs:comment "The name of the role." ;
+          rdfs:label "role name" .
+
+
+###  http://example.org/capstone#scopeDescription
+:scopeDescription rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf dcterms:description ;
+                  rdfs:domain :FutureScope ;
+                  rdfs:range xsd:string ;
+                  rdfs:comment "Description of the future work or extension." ;
+                  rdfs:label "scope description" .
+
+
+###  http://example.org/capstone#severity
+:severity rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Challenge ;
+          rdfs:range xsd:string ;
+          rdfs:comment "Severity level of the challenge (e.g. High, Medium, Low)." ;
+          rdfs:label "severity" .
+
+
+###  http://example.org/capstone#softwareVersion
+:softwareVersion rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf schema:version ;
+                 rdfs:domain :SoftwareTool ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "Version of the software tool." ;
+                 rdfs:label "software version" .
+
+
+###  http://example.org/capstone#startDate
+:startDate rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf prov:startedAtTime ;
+           rdfs:range xsd:date ;
+           rdfs:comment "The start date/time of a project or phase." ;
+           rdfs:label "start date" .
+
+
+###  http://example.org/capstone#status
+:status rdf:type owl:DatatypeProperty ;
+        rdfs:range xsd:string ;
+        rdfs:comment "Status of a phase, deliverable, or challenge." ;
+        rdfs:label "status" .
+
+
+###  http://example.org/capstone#teamName
+:teamName rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf schema:name ;
+          rdfs:domain :Team ;
+          rdfs:range xsd:string ;
+          rdfs:comment "Name of the project team." ;
+          rdfs:label "team name" .
+
+
+###  http://example.org/capstone#teamSize
+:teamSize rdf:type owl:DatatypeProperty ;
+          rdfs:range xsd:integer ;
+          rdfs:comment "The number of members in a project or team." ;
+          rdfs:label "team size" .
+
+
+###  http://example.org/capstone#techName
+:techName rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf dcterms:title ;
+          rdfs:domain :Technology ;
+          rdfs:range xsd:string ;
+          rdfs:comment "Name of the technology (e.g. language or tool)." ;
+          rdfs:label "technology name" .
+
+
+###  http://example.org/capstone#type
+:type rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf dcterms:type ;
+      rdfs:domain :Requirement ;
+      rdfs:range xsd:string ;
+      rdfs:comment "Category (type) of the requirement." ;
+      rdfs:label "type" .
+
+
+###  http://example.org/capstone#version
+:version rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf schema:version ;
+         rdfs:domain :Technology ;
+         rdfs:range xsd:string ;
+         rdfs:comment "Version of the technology." ;
+         rdfs:label "version" .
+
+
+###  http://example.org/capstone#weight
+:weight rdf:type owl:DatatypeProperty ;
+        rdfs:domain :EvaluationCriterion ;
+        rdfs:range xsd:decimal ;
+        rdfs:comment "Weight of the evaluation criterion." ;
+        rdfs:label "weight" .
+
+
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:DatatypeProperty ;
+                rdfs:comment "This element represents a creation date. This element is reused from the Dublin Core Terms vocabulary." ;
+                rdfs:label "created" .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:DatatypeProperty ;
+                    rdfs:comment "This element represents a description. This element is reused from the Dublin Core Terms vocabulary." ;
+                    rdfs:label "description" .
+
+
+###  http://purl.org/dc/terms/format
+dcterms:format rdf:type owl:DatatypeProperty ;
+               rdfs:comment "This element represents a format type. This element is reused from the Dublin Core Terms vocabulary." ;
+               rdfs:label "format" .
+
+
+###  http://purl.org/dc/terms/identifier
+dcterms:identifier rdf:type owl:DatatypeProperty ;
+                   rdfs:comment "This element represents identifier. This element is reused from the Dublin Core Terms vocabulary." ;
+                   rdfs:label "identifier" .
+
+
+###  http://purl.org/dc/terms/modified
+dcterms:modified rdf:type owl:DatatypeProperty ;
+                 rdfs:comment "This element represents the last modification date. This element is reused from the Dublin Core Terms vocabulary." ;
+                 rdfs:label "modified" .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:DatatypeProperty ;
+              rdfs:comment "This element represents a title. This element is reused from the Dublin Core Terms vocabulary." ;
+              rdfs:label "title" .
+
+
+###  http://purl.org/dc/terms/type
+dcterms:type rdf:type owl:DatatypeProperty ;
+             rdfs:comment "This element represents a type. This element is reused from the Dublin Core Terms vocabulary." ;
+             rdfs:label "type" .
+
+
+###  http://schema.org/affiliation
+schema:affiliation rdf:type owl:DatatypeProperty ;
+                   rdfs:comment "This element represents an affiliation. This element is reused from the Schema.org vocabulary." ;
+                   rdfs:label "affiliation" .
+
+
+###  http://schema.org/email
+schema:email rdf:type owl:DatatypeProperty ;
+             rdfs:comment "This element represents an email address. This element is reused from the Schema.org vocabulary." ;
+             rdfs:label "email" .
+
+
+###  http://schema.org/name
+schema:name rdf:type owl:DatatypeProperty ;
+            owl:equivalentProperty foaf:name ;
+            rdfs:comment "This element represents a name. This element is reused from the Schema.org vocabulary." ;
+            rdfs:label "name" .
+
+
+###  http://schema.org/numberOfPages
+schema:numberOfPages rdf:type owl:DatatypeProperty ;
+                     rdfs:comment "This element represents the number of pages. This element is reused from the Schema.org vocabulary." ;
+                     rdfs:label "numberOfPages" .
+
+
+###  http://schema.org/roleName
+schema:roleName rdf:type owl:DatatypeProperty ;
+                rdfs:comment "This element represents a role name. This element is reused from the Schema.org vocabulary." ;
+                rdfs:label "roleName" .
+
+
+###  http://schema.org/telephone
+schema:telephone rdf:type owl:DatatypeProperty ;
+                 rdfs:comment "This element represents a telephone number. This element is reused from the Schema.org vocabulary." ;
+                 rdfs:label "telephone" .
+
+
+###  http://schema.org/version
+schema:version rdf:type owl:DatatypeProperty ;
+               rdfs:comment "This element represents a version. This element is reused from the Schema.org vocabulary." ;
+               rdfs:label "version" .
+
+
+###  http://www.w3.org/ns/prov#endedAtTime
+prov:endedAtTime rdf:type owl:DatatypeProperty ;
+                 rdfs:comment "This element represents the end time. This element is reused from the PROV-O ontology." ;
+                 rdfs:label "endedAtTime" .
+
+
+###  http://www.w3.org/ns/prov#generatedAtTime
+prov:generatedAtTime rdf:type owl:DatatypeProperty ;
+                     rdfs:comment "This element represents the time of generation. This element is reused from the PROV-O ontology." ;
+                     rdfs:label "generatedAtTime" .
+
+
+###  http://www.w3.org/ns/prov#startedAtTime
+prov:startedAtTime rdf:type owl:DatatypeProperty ;
+                   rdfs:comment "This element represents the start time. This element is reused from the PROV-O ontology." ;
+                   rdfs:label "startedAtTime" .
+
+
+###  http://xmlns.com/foaf/0.1/name
+foaf:name rdf:type owl:DatatypeProperty ;
+          rdfs:comment "This element represents a name in FOAF. This element is reused from the FOAF vocabulary." ;
+          rdfs:label "name (FOAF)" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://example.org/capstone#Advisor
+:Advisor rdf:type owl:Class ;
+         rdfs:subClassOf :Role ;
+         rdfs:comment "A role for a stakeholder who advises the team." ;
+         rdfs:label "Advisor" .
+
+
+###  http://example.org/capstone#BudgetRisk
+:BudgetRisk rdf:type owl:Class ;
+            rdfs:subClassOf :Risk ;
+            rdfs:comment "A budgetary risk in the project." ;
+            rdfs:label "Budget Risk" .
+
+
+###  http://example.org/capstone#CapstoneProject
+:CapstoneProject rdf:type owl:Class ;
+                 rdfs:subClassOf schema:Project ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasDeliverable ;
+                                   owl:minCardinality "1"^^xsd:nonNegativeInteger
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasPhase ;
+                                   owl:minCardinality "1"^^xsd:nonNegativeInteger
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasStakeholder ;
+                                   owl:minCardinality "1"^^xsd:nonNegativeInteger
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasProjectManager ;
+                                   owl:cardinality "1"^^xsd:nonNegativeInteger
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasTeam ;
+                                   owl:cardinality "1"^^xsd:nonNegativeInteger
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :teamSize ;
+                                   owl:allValuesFrom xsd:integer
+                                 ] ;
+                 rdfs:comment "A planned capstone project with specific goals." ;
+                 rdfs:label "Capstone Project" .
+
+
+###  http://example.org/capstone#Challenge
+:Challenge rdf:type owl:Class ;
+           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                             owl:onProperty :status ;
+                             owl:allValuesFrom xsd:string
+                           ] ;
+           rdfs:comment "A challenge or constraint in the project." ;
+           rdfs:label "Challenge" .
+
+
+###  http://example.org/capstone#ClosurePhase
+:ClosurePhase rdf:type owl:Class ;
+              rdfs:subClassOf :ProjectPhase ;
+              rdfs:comment "The final (closure) phase of the project." ;
+              rdfs:label "Closure Phase" .
+
+
+###  http://example.org/capstone#Database
+:Database rdf:type owl:Class ;
+          rdfs:subClassOf :Technology ;
+          rdfs:comment "A database technology used in the project." ;
+          rdfs:label "Database" .
+
+
+###  http://example.org/capstone#Deliverable
+:Deliverable rdf:type owl:Class ;
+             rdfs:subClassOf schema:CreativeWork ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :producedBy ;
+                               owl:minCardinality "1"^^xsd:nonNegativeInteger
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :status ;
+                               owl:allValuesFrom xsd:string
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :dueDate ;
+                               owl:minCardinality "1"^^xsd:nonNegativeInteger
+                             ] ;
+             rdfs:comment "An artifact produced by the project (e.g. document or demo)." ;
+             rdfs:label "Deliverable" .
+
+
+###  http://example.org/capstone#Designer
+:Designer rdf:type owl:Class ;
+          rdfs:subClassOf :Role ;
+          rdfs:comment "A role for a stakeholder who designs system components." ;
+          rdfs:label "Designer" .
+
+
+###  http://example.org/capstone#Developer
+:Developer rdf:type owl:Class ;
+           rdfs:subClassOf :Role ;
+           rdfs:comment "A role for a stakeholder who develops the system." ;
+           rdfs:label "Developer" .
+
+
+###  http://example.org/capstone#Documentation
+:Documentation rdf:type owl:Class ;
+               rdfs:subClassOf :Deliverable ;
+               rdfs:comment "A documentation-type deliverable (abstract class for project documents)." ;
+               rdfs:label "Documentation" .
+
+
+###  http://example.org/capstone#Evaluation
+:Evaluation rdf:type owl:Class ;
+            rdfs:subClassOf prov:Activity ;
+            rdfs:comment "The process or activity of evaluating the project." ;
+            rdfs:label "Evaluation" .
+
+
+###  http://example.org/capstone#EvaluationCriterion
+:EvaluationCriterion rdf:type owl:Class ;
+                     owl:disjointWith :Role ,
+                                      :Tester ;
+                     rdfs:comment "A criterion used to evaluate the project." ;
+                     rdfs:label "Evaluation Criterion" .
+
+
+###  http://example.org/capstone#Evaluator
+:Evaluator rdf:type owl:Class ;
+           rdfs:subClassOf :Stakeholder ;
+           rdfs:comment "A stakeholder who evaluates the project." ;
+           rdfs:label "Evaluator" .
+
+
+###  http://example.org/capstone#ExecutionPhase
+:ExecutionPhase rdf:type owl:Class ;
+                rdfs:subClassOf :ProjectPhase ;
+                rdfs:comment "The execution (development) phase of the project." ;
+                rdfs:label "Execution Phase" .
+
+
+###  http://example.org/capstone#Extension
+:Extension rdf:type owl:Class ;
+           rdfs:subClassOf :FutureScope ;
+           rdfs:comment "A proposed extension of the project." ;
+           rdfs:label "Extension" .
+
+
+###  http://example.org/capstone#FinalReport
+:FinalReport rdf:type owl:Class ;
+             rdfs:subClassOf :Documentation ;
+             rdfs:comment "The final project report document." ;
+             rdfs:label "Final Report" .
+
+
+###  http://example.org/capstone#Framework
+:Framework rdf:type owl:Class ;
+           rdfs:subClassOf :Technology ;
+           rdfs:comment "A software framework used in the project." ;
+           rdfs:label "Framework" .
+
+
+###  http://example.org/capstone#Functionality
+:Functionality rdf:type owl:Class ;
+               rdfs:subClassOf :EvaluationCriterion ;
+               rdfs:comment "An evaluation criterion for functionality." ;
+               rdfs:label "Functionality" .
+
+
+###  http://example.org/capstone#FutureScope
+:FutureScope rdf:type owl:Class ;
+             rdfs:comment "Future work or extension items." ;
+             rdfs:label "Future Scope" .
+
+
+###  http://example.org/capstone#FutureWork
+:FutureWork rdf:type owl:Class ;
+            rdfs:subClassOf :FutureScope ;
+            rdfs:comment "A proposed future work item." ;
+            rdfs:label "Future Work" .
+
+
+###  http://example.org/capstone#InitiationPhase
+:InitiationPhase rdf:type owl:Class ;
+                 rdfs:subClassOf :ProjectPhase ;
+                 rdfs:comment "The initial phase of the project." ;
+                 rdfs:label "Initiation Phase" .
+
+
+###  http://example.org/capstone#Innovation
+:Innovation rdf:type owl:Class ;
+            rdfs:subClassOf :EvaluationCriterion ;
+            rdfs:comment "An evaluation criterion for innovation." ;
+            rdfs:label "Innovation" .
+
+
+###  http://example.org/capstone#Instructor
+:Instructor rdf:type owl:Class ;
+            rdfs:subClassOf :Stakeholder ;
+            rdfs:comment "A stakeholder who is an instructor of the course." ;
+            rdfs:label "Instructor" .
+
+
+###  http://example.org/capstone#PlanningPhase
+:PlanningPhase rdf:type owl:Class ;
+               rdfs:subClassOf :ProjectPhase ;
+               rdfs:comment "The planning phase of the project." ;
+               rdfs:label "Planning Phase" .
+
+
+###  http://example.org/capstone#Poster
+:Poster rdf:type owl:Class ;
+        rdfs:subClassOf schema:CreativeWork ;
+        rdfs:comment "A poster deliverable." ;
+        rdfs:label "Poster" .
+
+
+###  http://example.org/capstone#Presentation
+:Presentation rdf:type owl:Class ;
+              rdfs:subClassOf schema:CreativeWork ;
+              rdfs:comment "A presentation deliverable." ;
+              rdfs:label "Presentation" .
+
+
+###  http://example.org/capstone#ProgrammingLanguage
+:ProgrammingLanguage rdf:type owl:Class ;
+                     rdfs:subClassOf schema:ComputerLanguage ;
+                     rdfs:comment "A programming language used in the project." ;
+                     rdfs:label "Programming Language" .
+
+
+###  http://example.org/capstone#ProjectManager
+:ProjectManager rdf:type owl:Class ;
+                rdfs:subClassOf :Role ;
+                rdfs:comment "A role for a stakeholder who manages the project." ;
+                rdfs:label "Project Manager" .
+
+
+###  http://example.org/capstone#ProjectPhase
+:ProjectPhase rdf:type owl:Class ;
+              rdfs:subClassOf prov:Activity ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :status ;
+                                owl:allValuesFrom xsd:string
+                              ] ;
+              rdfs:comment "A phase of the capstone project (e.g. initiation, planning)." ;
+              rdfs:label "Project Phase" .
+
+
+###  http://example.org/capstone#ProjectPlan
+:ProjectPlan rdf:type owl:Class ;
+             rdfs:subClassOf :Documentation ;
+             rdfs:comment "A planning document for the project." ;
+             rdfs:label "Project Plan" .
+
+
+###  http://example.org/capstone#ProjectProposal
+:ProjectProposal rdf:type owl:Class ;
+                 rdfs:subClassOf :Documentation ;
+                 rdfs:comment "A proposal document for the project." ;
+                 rdfs:label "Project Proposal" .
+
+
+###  http://example.org/capstone#ProjectSchedule
+:ProjectSchedule rdf:type owl:Class ;
+                 rdfs:subClassOf :Documentation ;
+                 rdfs:comment "A schedule/timeline document for the project." ;
+                 rdfs:label "Project Schedule" .
+
+
+###  http://example.org/capstone#ProjectTeam
+:ProjectTeam rdf:type owl:Class ;
+             rdfs:subClassOf :Team ;
+             rdfs:comment "A specific project team." ;
+             rdfs:label "Project Team" .
+
+
+###  http://example.org/capstone#Prototype
+:Prototype rdf:type owl:Class ;
+           rdfs:subClassOf schema:CreativeWork ;
+           rdfs:comment "A prototype deliverable." ;
+           rdfs:label "Prototype" .
+
+
+###  http://example.org/capstone#Requirement
+:Requirement rdf:type owl:Class ;
+             rdfs:comment "A requirement for the project." ;
+             rdfs:label "Requirement" .
+
+
+###  http://example.org/capstone#RequirementsDocument
+:RequirementsDocument rdf:type owl:Class ;
+                      rdfs:subClassOf :Documentation ;
+                      rdfs:comment "A document listing project requirements." ;
+                      rdfs:label "Requirements Document" .
+
+
+###  http://example.org/capstone#ResourceConstraint
+:ResourceConstraint rdf:type owl:Class ;
+                    rdfs:subClassOf :Challenge ;
+                    rdfs:comment "A resource-related constraint." ;
+                    rdfs:label "Resource Constraint" .
+
+
+###  http://example.org/capstone#Risk
+:Risk rdf:type owl:Class ;
+      rdfs:comment "A generic risk item in the project." ;
+      rdfs:label "Risk" .
+
+
+###  http://example.org/capstone#Role
+:Role rdf:type owl:Class ;
+      rdfs:subClassOf schema:Role ;
+      rdfs:comment "A role or position that a stakeholder can assume." ;
+      rdfs:label "Role" .
+
+
+###  http://example.org/capstone#ScheduleRisk
+:ScheduleRisk rdf:type owl:Class ;
+              rdfs:subClassOf :Risk ;
+              rdfs:comment "A scheduling risk in the project." ;
+              rdfs:label "Schedule Risk" .
+
+
+###  http://example.org/capstone#SoftwareSystem
+:SoftwareSystem rdf:type owl:Class ;
+                rdfs:comment "A software application produced by the project." ;
+                rdfs:label "Software System" .
+
+
+###  http://example.org/capstone#SoftwareTool
+:SoftwareTool rdf:type owl:Class ;
+              rdfs:subClassOf :Technology ;
+              rdfs:comment "A software tool used in the project." ;
+              rdfs:label "Software Tool" .
+
+
+###  http://example.org/capstone#Stakeholder
+:Stakeholder rdf:type owl:Class ;
+             rdfs:subClassOf foaf:Person ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :hasRole ;
+                               owl:cardinality "1"^^xsd:nonNegativeInteger
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :isMemberOf ;
+                               owl:cardinality "1"^^xsd:nonNegativeInteger
+                             ] ;
+             rdfs:comment "A person involved in the capstone project." ;
+             rdfs:label "Stakeholder" .
+
+
+###  http://example.org/capstone#StakeholderRegister
+:StakeholderRegister rdf:type owl:Class ;
+                     rdfs:subClassOf :Documentation ;
+                     rdfs:comment "A register listing stakeholders." ;
+                     rdfs:label "Stakeholder Register" .
+
+
+###  http://example.org/capstone#Student
+:Student rdf:type owl:Class ;
+         rdfs:subClassOf :Stakeholder ;
+         rdfs:comment "A stakeholder who is a student." ;
+         rdfs:label "Student" .
+
+
+###  http://example.org/capstone#Supervisor
+:Supervisor rdf:type owl:Class ;
+            rdfs:subClassOf :Stakeholder ;
+            rdfs:comment "A stakeholder who supervises the project." ;
+            rdfs:label "Supervisor" .
+
+
+###  http://example.org/capstone#Team
+:Team rdf:type owl:Class ;
+      rdfs:subClassOf schema:Organization ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :teamSize ;
+                        owl:allValuesFrom xsd:integer
+                      ] ;
+      rdfs:comment "A team of stakeholders in the project." ;
+      rdfs:label "Team" .
+
+
+###  http://example.org/capstone#TeamLeader
+:TeamLeader rdf:type owl:Class ;
+            rdfs:subClassOf :Role ;
+            rdfs:comment "A role for a stakeholder leading a team." ;
+            rdfs:label "Team Leader" .
+
+
+###  http://example.org/capstone#TechnicalRisk
+:TechnicalRisk rdf:type owl:Class ;
+               rdfs:subClassOf :Risk ;
+               rdfs:comment "A technical risk in the project." ;
+               rdfs:label "Technical Risk" .
+
+
+###  http://example.org/capstone#Technology
+:Technology rdf:type owl:Class ;
+            rdfs:comment "A generic technology (language, tool, etc.) used in the project." ;
+            rdfs:label "Technology" .
+
+
+###  http://example.org/capstone#TestPlan_TestReport
+:TestPlan_TestReport rdf:type owl:Class ;
+                     rdfs:subClassOf :Documentation ;
+                     rdfs:comment "A test plan and report document." ;
+                     rdfs:label "Test Plan/Test Report" .
+
+
+###  http://example.org/capstone#Tester
+:Tester rdf:type owl:Class ;
+        rdfs:subClassOf :Role ;
+        rdfs:comment "A role for a stakeholder who tests the system." ;
+        rdfs:label "Tester" .
+
+
+###  http://example.org/capstone#TimeConstraint
+:TimeConstraint rdf:type owl:Class ;
+                rdfs:subClassOf :Challenge ;
+                rdfs:comment "A time-related constraint." ;
+                rdfs:label "Time Constraint" .
+
+
+###  http://example.org/capstone#Timeliness
+:Timeliness rdf:type owl:Class ;
+            rdfs:subClassOf :EvaluationCriterion ;
+            rdfs:comment "An evaluation criterion for meeting deadlines." ;
+            rdfs:label "Timeliness" .
+
+
+###  http://example.org/capstone#UserManual
+:UserManual rdf:type owl:Class ;
+            rdfs:subClassOf :Documentation ;
+            rdfs:comment "A user manual deliverable." ;
+            rdfs:label "User Manual" .
+
+
+###  http://example.org/capstone#Viva
+:Viva rdf:type owl:Class ;
+      rdfs:subClassOf :EvaluationCriterion ;
+      rdfs:comment "An evaluation criterion related to the viva examination." ;
+      rdfs:label "Viva" .
+
+
+###  http://schema.org/ComputerLanguage
+schema:ComputerLanguage rdf:type owl:Class ;
+                        rdfs:subClassOf :Technology ;
+                        rdfs:comment "This element represents a computer language. This element is reused from the Schema.org vocabulary." ;
+                        rdfs:label "ComputerLanguage" .
+
+
+###  http://schema.org/CreativeWork
+schema:CreativeWork rdf:type owl:Class ;
+                    rdfs:comment "This element represents CreativeWork. This element is reused from the Schema.org vocabulary." ;
+                    rdfs:label "CreativeWork" .
+
+
+###  http://schema.org/Organization
+schema:Organization rdf:type owl:Class ;
+                    rdfs:comment "This element represents an organization. This element is reused from the Schema.org vocabulary." ;
+                    rdfs:label "Organization" .
+
+
+###  http://schema.org/Project
+schema:Project rdf:type owl:Class ;
+               rdfs:comment "This element represents Project. This element is reused from the Schema.org vocabulary." ;
+               rdfs:label "Project" .
+
+
+###  http://schema.org/Role
+schema:Role rdf:type owl:Class ;
+            rdfs:comment "This element represents a role. This element is reused from the Schema.org vocabulary." ;
+            rdfs:label "Role" .
+
+
+###  http://schema.org/SoftwareApplication
+schema:SoftwareApplication rdf:type owl:Class ;
+                           rdfs:subClassOf :Deliverable ;
+                           rdfs:comment "This element represents SoftwareApplication. This element is reused from the Schema.org vocabulary." ;
+                           rdfs:label "SoftwareApplication" .
+
+
+###  http://www.w3.org/ns/prov#Activity
+prov:Activity rdf:type owl:Class ;
+              rdfs:comment "This element represents Activity. This element is reused from the PROV-O ontology." ;
+              rdfs:label "Activity" .
+
+
+###  http://xmlns.com/foaf/0.1/Person
+foaf:Person rdf:type owl:Class ;
+            rdfs:comment "This element represents Person. This element is reused from the FOAF vocabulary." ;
+            rdfs:label "Person" .
+
+
+[ dcterms:created "2025-05-18"^^xsd:date ;
+  dcterms:description "This ontology models concepts relevant to capstone project documentation and management."@en ;
+  dcterms:title "Capstone Project Ontology"@en
+] .
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
